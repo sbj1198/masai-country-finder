@@ -2,13 +2,15 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import reactLogo from "./assets/react.svg";
 import { Navbar } from "./components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCountries } from "./redux/action";
 import { CountryCard } from "./components/CountryCard";
 import { Sorting } from "./components/Sorting";
+import { Filter } from "./components/Filter";
 
 function App() {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState({});
 
   useEffect(() => {
     dispatch(getCountries());
@@ -31,6 +33,7 @@ function App() {
             <Text fontSize="3xl" textAlign="center">
               Filter
             </Text>
+            <Filter />
           </Box>
           <Box w="75%" h="600px">
             <CountryCard />
