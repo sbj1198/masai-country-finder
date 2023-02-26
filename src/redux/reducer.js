@@ -5,6 +5,7 @@ const initialState = {
   isError: false,
   errorMessage: "",
   countries: [],
+  sort: "",
 };
 export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
@@ -26,6 +27,11 @@ export const reducer = (state = initialState, { type, payload }) => {
         isError: true,
         errorMessage: payload,
         countries: [],
+      };
+    case "GET_COUNTRY_SORTED":
+      return {
+        ...state,
+        sort: payload,
       };
     default:
       return state;

@@ -12,3 +12,10 @@ export const getCountries = () => (dispatch) => {
       dispatch({ type: types.GET_COUNTRY_FAILURE, payload: err.message });
     });
 };
+
+export const sortCountries = (param) => (dispatch) => {
+  dispatch({
+    type: "GET_COUNTRY_SORTED",
+    payload: param,
+  });
+};
