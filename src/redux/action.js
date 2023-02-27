@@ -15,7 +15,7 @@ export const getCountries = () => (dispatch) => {
 
 export const sortCountries = (param) => (dispatch) => {
   dispatch({
-    type: "GET_COUNTRY_SORTED",
+    type: types.GET_COUNTRY_SORTED,
     payload: param,
   });
 };

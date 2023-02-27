@@ -10,11 +10,15 @@ import { Filter } from "./components/Filter";
 
 function App() {
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
     dispatch(getCountries());
   }, []);
+
+  const handleFilter = (newFilter) => {
+    setFilter(newFilter);
+  };
 
   return (
     <Box>
@@ -33,10 +37,10 @@ function App() {
             <Text fontSize="3xl" textAlign="center">
               Filter
             </Text>
-            <Filter />
+            <Filter filter={filter} handleFilter={handleFilter} />
           </Box>
           <Box w="75%" h="600px">
-            <CountryCard />
+            <CountryCard filterArr={filter} />
           </Box>
         </Flex>
       </Box>

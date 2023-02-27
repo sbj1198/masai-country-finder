@@ -11,10 +11,41 @@ import {
 import { useSelector } from "react-redux";
 import { DetailsModal } from "./DetailsModal";
 
-export const CountryCard = () => {
+export const CountryCard = ({ filterArr }) => {
   const countries = useSelector((store) => store.countries);
   const sort = useSelector((store) => store.sort);
-  // console.log(sort);
+
+  const filtersort = () => {
+    if (sort === "asc" && filterArr.length) {
+      console.log("asc and filter");
+      return countries
+        ?.sort((a, b) => a.population - b.population)
+        ?.filter((el) => filterArr.includes(el.region));
+    }
+    if (sort === "desc" && filterArr.length) {
+      console.log("desc and filter");
+      return countries
+        ?.sort((a, b) => b.population - a.population)
+        ?.filter((el) => filterArr.includes(el.region));
+    }
+    if (sort === "asc") {
+      console.log("asc");
+      return countries?.sort((a, b) => a.population - b.population);
+    }
+    if (sort === "desc") {
+      console.log("desc");
+      return countries?.sort((a, b) => b.population - a.population);
+    }
+    if (filterArr.length) {
+      console.log("filter");
+      return countries?.filter((el) => filterArr.includes(el.region));
+    }
+    if (sort === "") {
+      console.log("no filter or sort");
+      return countries;
+    }
+  };
+
   return (
     <Grid
       templateColumns={{
@@ -24,123 +55,43 @@ export const CountryCard = () => {
       }}
       gap="20px"
     >
-      {sort === "asc"
-        ? countries
-            .sort((a, b) => a.population - b.population)
-            ?.map((country) => {
-              return (
-                <GridItem
-                  p="20px"
-                  key={country.name.common}
-                  boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px 0px"
-                >
-                  <Box>
-                    <Image objectFit="cover" src={country.flags.png} />
-                  </Box>
-                  <Box mt="20px">
-                    <Heading size="md">{country.name.common}</Heading>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Population: </Text>
-                      <Text>{country.population}</Text>
-                    </Flex>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Region: </Text>
-                      <Text>{country.region}</Text>
-                    </Flex>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Capital: </Text>
-                      <Text>{country?.capital && country?.capital[0]}</Text>
-                    </Flex>
-                  </Box>
-                  <Box display="flex" justifyContent="center" mt="20px">
-                    <DetailsModal details={country} />
-                  </Box>
-                </GridItem>
-              );
-            })
-        : sort === "desc"
-        ? countries
-            .sort((a, b) => b.population - a.population)
-            ?.map((country) => {
-              return (
-                <GridItem
-                  p="20px"
-                  key={country.name.common}
-                  boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px 0px"
-                >
-                  <Box>
-                    <Image objectFit="cover" src={country.flags.png} />
-                  </Box>
-                  <Box mt="20px">
-                    <Heading size="md">{country.name.common}</Heading>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Population: </Text>
-                      <Text>{country.population}</Text>
-                    </Flex>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Region: </Text>
-                      <Text>{country.region}</Text>
-                    </Flex>
-                  </Box>
-                  <Box>
-                    <Flex>
-                      <Text as="b">Capital: </Text>
-                      <Text>{country?.capital && country?.capital[0]}</Text>
-                    </Flex>
-                  </Box>
-                  <Box display="flex" justifyContent="center" mt="20px">
-                    <DetailsModal details={country} />
-                  </Box>
-                </GridItem>
-              );
-            })
-        : countries?.map((country) => {
-            return (
-              <GridItem
-                p="20px"
-                key={country.name.common}
-                boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px 0px"
-              >
-                <Box>
-                  <Image objectFit="cover" src={country.flags.png} />
-                </Box>
-                <Box mt="20px">
-                  <Heading size="md">{country.name.common}</Heading>
-                </Box>
-                <Box>
-                  <Flex>
-                    <Text as="b">Population: </Text>
-                    <Text>{country.population}</Text>
-                  </Flex>
-                </Box>
-                <Box>
-                  <Flex>
-                    <Text as="b">Region: </Text>
-                    <Text>{country.region}</Text>
-                  </Flex>
-                </Box>
-                <Box>
-                  <Flex>
-                    <Text as="b">Capital: </Text>
-                    <Text>{country?.capital && country?.capital[0]}</Text>
-                  </Flex>
-                </Box>
-                <Box display="flex" justifyContent="center" mt="20px">
-                  <DetailsModal details={country} />
-                </Box>
-              </GridItem>
-            );
-          })}
+      {filtersort()?.map((country) => {
+        return (
+          <GridItem
+            p="20px"
+            key={country.name.common}
+            boxShadow="rgba(0, 0, 0, 0.15) 0px 5px 15px 0px"
+          >
+            <Box>
+              <Image objectFit="cover" src={country.flags.png} />
+            </Box>
+            <Box mt="20px">
+              <Heading size="md">{country.name.common}</Heading>
+            </Box>
+            <Box>
+              <Flex>
+                <Text as="b">Population: </Text>
+                <Text>{country.population}</Text>
+              </Flex>
+            </Box>
+            <Box>
+              <Flex>
+                <Text as="b">Region: </Text>
+                <Text>{country.region}</Text>
+              </Flex>
+            </Box>
+            <Box>
+              <Flex>
+                <Text as="b">Capital: </Text>
+                <Text>{country?.capital && country?.capital[0]}</Text>
+              </Flex>
+            </Box>
+            <Box display="flex" justifyContent="center" mt="20px">
+              <DetailsModal details={country} />
+            </Box>
+          </GridItem>
+        );
+      })}
     </Grid>
   );
 };
