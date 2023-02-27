@@ -17,31 +17,25 @@ export const CountryCard = ({ filterArr }) => {
 
   const filtersort = () => {
     if (sort === "asc" && filterArr.length) {
-      console.log("asc and filter");
       return countries
         ?.sort((a, b) => a.population - b.population)
         ?.filter((el) => filterArr.includes(el.region));
     }
     if (sort === "desc" && filterArr.length) {
-      console.log("desc and filter");
       return countries
         ?.sort((a, b) => b.population - a.population)
         ?.filter((el) => filterArr.includes(el.region));
     }
     if (sort === "asc") {
-      console.log("asc");
       return countries?.sort((a, b) => a.population - b.population);
     }
     if (sort === "desc") {
-      console.log("desc");
       return countries?.sort((a, b) => b.population - a.population);
     }
     if (filterArr.length) {
-      console.log("filter");
       return countries?.filter((el) => filterArr.includes(el.region));
     }
     if (sort === "") {
-      console.log("no filter or sort");
       return countries;
     }
   };
